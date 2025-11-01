@@ -64,29 +64,35 @@ function App() {
   ];
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8 overflow-hidden" dir="rtl">
-      <div className="max-w-[3840px] mx-auto h-full flex flex-col">
-        <DateDisplay
-          hijriDate={getHijriDate(currentTime)}
-          gregorianDate={formatGregorianDate(currentTime)}
-        />
+    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-6 overflow-hidden flex items-center justify-center" dir="rtl">
+      <div className="w-full max-w-[3840px] h-full flex flex-col justify-between py-4">
+        <div className="flex-shrink-0">
+          <DateDisplay
+            hijriDate={getHijriDate(currentTime)}
+            gregorianDate={formatGregorianDate(currentTime)}
+          />
+        </div>
 
         {nextPrayer && (
-          <TimeRemaining
-            timeRemaining={timeRemaining}
-            nextPrayerName={nextPrayer.name}
-          />
+          <div className="flex-shrink-0">
+            <TimeRemaining
+              timeRemaining={timeRemaining}
+              nextPrayerName={nextPrayer.name}
+            />
+          </div>
         )}
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 flex-1">
-          {prayers.map((prayer) => (
-            <PrayerCard
-              key={prayer.name}
-              name={prayer.name}
-              time={prayer.time}
-              isNext={nextPrayer?.name === prayer.name}
-            />
-          ))}
+        <div className="flex-1 min-h-0">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 h-full">
+            {prayers.map((prayer) => (
+              <PrayerCard
+                key={prayer.name}
+                name={prayer.name}
+                time={prayer.time}
+                isNext={nextPrayer?.name === prayer.name}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
