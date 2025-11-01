@@ -64,12 +64,11 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8" dir="rtl">
-      <div className="max-w-7xl mx-auto">
+    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-6 overflow-hidden" dir="rtl">
+      <div className="max-w-[1920px] mx-auto h-full flex flex-col">
         <DateDisplay
           hijriDate={getHijriDate(currentTime)}
           gregorianDate={formatGregorianDate(currentTime)}
-          city={data.المدينة}
         />
 
         {nextPrayer && (
@@ -79,7 +78,7 @@ function App() {
           />
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
           {prayers.map((prayer) => (
             <PrayerCard
               key={prayer.name}
@@ -88,12 +87,6 @@ function App() {
               isNext={nextPrayer?.name === prayer.name}
             />
           ))}
-        </div>
-
-        <div className="mt-8 text-center">
-          <p className="text-slate-400 text-2xl">
-            {data.المصدر}
-          </p>
         </div>
       </div>
     </div>

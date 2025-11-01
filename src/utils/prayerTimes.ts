@@ -18,9 +18,9 @@ export const getNextPrayer = (
   prayerTimes: DailyPrayer,
   currentTime: Date
 ): { name: PrayerName; time: string } | null => {
+  // استبعاد "الشروق" من الصلوات الخمس الفعلية
   const prayers: Array<{ name: PrayerName; time: string }> = [
     { name: 'الفجر', time: prayerTimes.الفجر },
-    { name: 'الشروق', time: prayerTimes.الشروق },
     { name: 'الظهر', time: prayerTimes.الظهر },
     { name: 'العصر', time: prayerTimes.العصر },
     { name: 'المغرب', time: prayerTimes.المغرب },

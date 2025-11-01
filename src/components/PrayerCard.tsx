@@ -9,7 +9,7 @@ interface PrayerCardProps {
 export default function PrayerCard({ name, time, isNext }: PrayerCardProps) {
   return (
     <div
-      className={`rounded-3xl p-8 transition-all ${
+      className={`rounded-3xl p-6 transition-all flex flex-col justify-center ${
         isNext
           ? 'bg-gradient-to-br from-green-600 to-green-700 shadow-2xl scale-105 ring-4 ring-green-400'
           : 'bg-gradient-to-br from-slate-700 to-slate-800 shadow-lg'
