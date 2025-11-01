@@ -9,7 +9,6 @@ import {
   formatGregorianDate,
 } from './utils/prayerTimes';
 import PrayerCard from './components/PrayerCard';
-import TimeRemaining from './components/TimeRemaining';
 import DateDisplay from './components/DateDisplay';
 
 function App() {
@@ -133,15 +132,34 @@ function App() {
           />
         </div>
 
-        {/* الوقت المتبقي */}
-        {nextPrayer && (
-          <div className="flex-none">
-            <TimeRemaining
-              timeRemaining={timeRemaining}
-              nextPrayerName={nextPrayer.name}
-            />
+        {/* الوقت المتبقي والوقت الحالي */}
+        <div className="flex-none grid grid-cols-2 gap-3 mb-2">
+          {/* بطاقة الوقت الحالي */}
+          <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl p-4 shadow-2xl">
+            <h2 className="text-2xl font-bold text-white text-center mb-2">
+              الوقت الحالي
+            </h2>
+            <p className="text-5xl font-extrabold text-white text-center tracking-wide">
+              {currentTime.toLocaleTimeString('ar-SA', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+              })}
+            </p>
           </div>
-        )}
+
+          {/* بطاقة الوقت المتبقي */}
+          {nextPrayer && (
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 shadow-2xl">
+              <h2 className="text-2xl font-bold text-white text-center mb-2">
+                الوقت المتبقي لصلاة {nextPrayer.name}
+              </h2>
+              <p className="text-5xl font-extrabold text-white text-center tracking-wide">
+                {timeRemaining}
+              </p>
+            </div>
+          )}
+        </div>
 
         {/* بطاقات الصلاة - تأخذ المساحة المتبقية */}
         <div className="flex-1 min-h-0 pb-3">
