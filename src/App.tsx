@@ -65,7 +65,7 @@ function App() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden" dir="rtl">
-      <div className="h-full flex flex-col p-4">
+      <div className="h-full flex flex-col p-3">
         {/* التواريخ */}
         <div className="flex-none">
           <DateDisplay
@@ -85,8 +85,8 @@ function App() {
         )}
 
         {/* بطاقات الصلاة - تأخذ المساحة المتبقية */}
-        <div className="flex-1 min-h-0 pb-4">
-          <div className="h-full grid grid-cols-3 gap-4">
+        <div className="flex-1 min-h-0 pb-3">
+          <div className="h-full grid grid-cols-3 gap-3">
             {prayers.map((prayer) => (
               <PrayerCard
                 key={prayer.name}
