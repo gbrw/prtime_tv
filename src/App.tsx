@@ -112,6 +112,28 @@ function App() {
     return `${displayHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${period}`;
   };
 
+  // دالة للحصول على الوقت الحالي بنظام 12 ساعة
+  const getCurrentTime12Hour = (): string => {
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    
+    let period = 'ص';
+    let displayHours = hours;
+    
+    if (hours >= 12) {
+      period = 'م';
+      if (hours > 12) {
+        displayHours = hours - 12;
+      }
+    }
+    
+    if (hours === 0) {
+      displayHours = 12;
+    }
+    
+    return `${displayHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${period}`;
+  };
+
   const prayers: Array<{ name: PrayerName; time: string }> = [
     { name: 'الفجر', time: convertTo12Hour(todayPrayers.الفجر, 'الفجر') },
     { name: 'الشروق', time: convertTo12Hour(todayPrayers.الشروق, 'الشروق') },
@@ -135,16 +157,12 @@ function App() {
         {/* الوقت المتبقي والوقت الحالي */}
         <div className="flex-none grid grid-cols-2 gap-3 mb-2">
           {/* بطاقة الوقت الحالي */}
-          <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl p-4 shadow-2xl">
+          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-4 shadow-2xl">
             <h2 className="text-2xl font-bold text-white text-center mb-2">
               الوقت الحالي
             </h2>
             <p className="text-5xl font-extrabold text-white text-center tracking-wide">
-              {currentTime.toLocaleTimeString('ar-SA', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
-              })}
+              {getCurrentTime12Hour()}
             </p>
           </div>
 
