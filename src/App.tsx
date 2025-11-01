@@ -84,13 +84,27 @@ function App() {
     );
   }
 
+  // دالة لتحويل الوقت من 12 ساعة إلى 24 ساعة للعرض
+  const convertTo24Hour = (time: string, prayerName: PrayerName): string => {
+    let [hours, minutes] = time.split(':').map(Number);
+    
+    // تحويل العصر والمغرب والعشاء إلى نظام 24 ساعة
+    if (prayerName === 'العصر' || prayerName === 'المغرب' || prayerName === 'العشاء') {
+      if (hours < 12) {
+        hours += 12;
+      }
+    }
+    
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  };
+
   const prayers: Array<{ name: PrayerName; time: string }> = [
-    { name: 'الفجر', time: todayPrayers.الفجر },
-    { name: 'الشروق', time: todayPrayers.الشروق },
-    { name: 'الظهر', time: todayPrayers.الظهر },
-    { name: 'العصر', time: todayPrayers.العصر },
-    { name: 'المغرب', time: todayPrayers.المغرب },
-    { name: 'العشاء', time: todayPrayers.العشاء },
+    { name: 'الفجر', time: convertTo24Hour(todayPrayers.الفجر, 'الفجر') },
+    { name: 'الشروق', time: convertTo24Hour(todayPrayers.الشروق, 'الشروق') },
+    { name: 'الظهر', time: convertTo24Hour(todayPrayers.الظهر, 'الظهر') },
+    { name: 'العصر', time: convertTo24Hour(todayPrayers.العصر, 'العصر') },
+    { name: 'المغرب', time: convertTo24Hour(todayPrayers.المغرب, 'المغرب') },
+    { name: 'العشاء', time: convertTo24Hour(todayPrayers.العشاء, 'العشاء') },
   ];
 
   return (

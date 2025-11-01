@@ -31,11 +31,20 @@ export const getNextPrayer = (
     currentTime.getHours() * 60 + currentTime.getMinutes();
 
   for (const prayer of prayers) {
-    const [hours, minutes] = prayer.time.split(':').map(Number);
+    let [hours, minutes] = prayer.time.split(':').map(Number);
+    
+    // تحويل من نظام 12 ساعة إلى 24 ساعة للأوقات المسائية
+    // العصر والمغرب والعشاء تكون بعد الظهر
+    if (prayer.name === 'العصر' || prayer.name === 'المغرب' || prayer.name === 'العشاء') {
+      if (hours < 12) {
+        hours += 12;
+      }
+    }
+    
     const prayerMinutes = hours * 60 + minutes;
 
     if (prayerMinutes > currentMinutes) {
-      return prayer;
+      return { name: prayer.name, time: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}` };
     }
   }
 
