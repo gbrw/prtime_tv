@@ -64,8 +64,8 @@ function App() {
   ];
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-6 overflow-hidden" dir="rtl">
-      <div className="max-w-[1920px] mx-auto h-full flex flex-col">
+    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-12 overflow-hidden" dir="rtl">
+      <div className="max-w-[3840px] mx-auto h-full flex flex-col">
         <DateDisplay
           hijriDate={getHijriDate(currentTime)}
           gregorianDate={formatGregorianDate(currentTime)}
@@ -78,7 +78,7 @@ function App() {
           />
         )}
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 flex-1">
           {prayers.map((prayer) => (
             <PrayerCard
               key={prayer.name}
