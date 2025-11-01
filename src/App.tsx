@@ -84,27 +84,42 @@ function App() {
     );
   }
 
-  // دالة لتحويل الوقت من 12 ساعة إلى 24 ساعة للعرض
-  const convertTo24Hour = (time: string, prayerName: PrayerName): string => {
+  // دالة لتحويل الوقت من 24 ساعة إلى 12 ساعة مع ص/م
+  const convertTo12Hour = (time: string, prayerName: PrayerName): string => {
     let [hours, minutes] = time.split(':').map(Number);
     
-    // تحويل العصر والمغرب والعشاء إلى نظام 24 ساعة
+    // تحويل العصر والمغرب والعشاء إلى نظام 24 ساعة أولاً
     if (prayerName === 'العصر' || prayerName === 'المغرب' || prayerName === 'العشاء') {
       if (hours < 12) {
         hours += 12;
       }
     }
     
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    // تحويل من 24 ساعة إلى 12 ساعة للعرض
+    let period = 'ص'; // صباحاً
+    let displayHours = hours;
+    
+    if (hours >= 12) {
+      period = 'م'; // مساءً
+      if (hours > 12) {
+        displayHours = hours - 12;
+      }
+    }
+    
+    if (hours === 0) {
+      displayHours = 12;
+    }
+    
+    return `${displayHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${period}`;
   };
 
   const prayers: Array<{ name: PrayerName; time: string }> = [
-    { name: 'الفجر', time: convertTo24Hour(todayPrayers.الفجر, 'الفجر') },
-    { name: 'الشروق', time: convertTo24Hour(todayPrayers.الشروق, 'الشروق') },
-    { name: 'الظهر', time: convertTo24Hour(todayPrayers.الظهر, 'الظهر') },
-    { name: 'العصر', time: convertTo24Hour(todayPrayers.العصر, 'العصر') },
-    { name: 'المغرب', time: convertTo24Hour(todayPrayers.المغرب, 'المغرب') },
-    { name: 'العشاء', time: convertTo24Hour(todayPrayers.العشاء, 'العشاء') },
+    { name: 'الفجر', time: convertTo12Hour(todayPrayers.الفجر, 'الفجر') },
+    { name: 'الشروق', time: convertTo12Hour(todayPrayers.الشروق, 'الشروق') },
+    { name: 'الظهر', time: convertTo12Hour(todayPrayers.الظهر, 'الظهر') },
+    { name: 'العصر', time: convertTo12Hour(todayPrayers.العصر, 'العصر') },
+    { name: 'المغرب', time: convertTo12Hour(todayPrayers.المغرب, 'المغرب') },
+    { name: 'العشاء', time: convertTo12Hour(todayPrayers.العشاء, 'العشاء') },
   ];
 
   return (
