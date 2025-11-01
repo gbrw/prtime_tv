@@ -64,17 +64,19 @@ function App() {
   ];
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-6 overflow-hidden flex items-center justify-center" dir="rtl">
-      <div className="w-full max-w-[3840px] h-full flex flex-col justify-between py-4">
-        <div className="flex-shrink-0">
+    <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden" dir="rtl">
+      <div className="h-full flex flex-col p-4">
+        {/* التواريخ */}
+        <div className="flex-none">
           <DateDisplay
             hijriDate={getHijriDate(currentTime)}
             gregorianDate={formatGregorianDate(currentTime)}
           />
         </div>
 
+        {/* الوقت المتبقي */}
         {nextPrayer && (
-          <div className="flex-shrink-0">
+          <div className="flex-none">
             <TimeRemaining
               timeRemaining={timeRemaining}
               nextPrayerName={nextPrayer.name}
@@ -82,8 +84,9 @@ function App() {
           </div>
         )}
 
-        <div className="flex-1 min-h-0">
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 h-full">
+        {/* بطاقات الصلاة - تأخذ المساحة المتبقية */}
+        <div className="flex-1 min-h-0 pb-4">
+          <div className="h-full grid grid-cols-3 gap-4">
             {prayers.map((prayer) => (
               <PrayerCard
                 key={prayer.name}

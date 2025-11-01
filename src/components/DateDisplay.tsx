@@ -9,21 +9,21 @@ export default function DateDisplay({
   gregorianDate,
 }: DateDisplayProps) {
   return (
-    <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-3xl p-6 shadow-2xl mb-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-slate-700/50 rounded-2xl p-6">
-          <p className="text-2xl text-slate-300 text-center mb-2">
+    <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-4 shadow-2xl mb-3">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-slate-700/50 rounded-xl p-4">
+          <p className="text-xl text-slate-300 text-center mb-1">
             التاريخ الهجري
           </p>
-          <p className="text-4xl font-bold text-white text-center">
+          <p className="text-3xl font-bold text-white text-center">
             {hijriDate}
           </p>
         </div>
-        <div className="bg-slate-700/50 rounded-2xl p-6">
-          <p className="text-2xl text-slate-300 text-center mb-2">
+        <div className="bg-slate-700/50 rounded-xl p-4">
+          <p className="text-xl text-slate-300 text-center mb-1">
             التاريخ الميلادي
           </p>
-          <p className="text-4xl font-bold text-white text-center">
+          <p className="text-3xl font-bold text-white text-center">
             {gregorianDate}
           </p>
         </div>
