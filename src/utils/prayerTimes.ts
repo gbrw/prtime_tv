@@ -1,0 +1,96 @@
+import { PrayerData, DailyPrayer, PrayerName } from '../types/prayer';
+
+export const getPrayerTimesForDate = (
+  data: PrayerData,
+  date: Date
+): DailyPrayer | null => {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const monthData = data.الأشهر.find((m) => m.الشهر_الميلادي === month);
+  if (!monthData) return null;
+
+  const dayData = monthData.البيانات_اليومية.find((d) => d.اليوم === day);
+  return dayData || null;
+};
+
+export const getNextPrayer = (
+  prayerTimes: DailyPrayer,
+  currentTime: Date
+): { name: PrayerName; time: string } | null => {
+  const prayers: Array<{ name: PrayerName; time: string }> = [
+    { name: 'الفجر', time: prayerTimes.الفجر },
+    { name: 'الشروق', time: prayerTimes.الشروق },
+    { name: 'الظهر', time: prayerTimes.الظهر },
+    { name: 'العصر', time: prayerTimes.العصر },
+    { name: 'المغرب', time: prayerTimes.المغرب },
+    { name: 'العشاء', time: prayerTimes.العشاء },
+  ];
+
+  const currentMinutes =
+    currentTime.getHours() * 60 + currentTime.getMinutes();
+
+  for (const prayer of prayers) {
+    const [hours, minutes] = prayer.time.split(':').map(Number);
+    const prayerMinutes = hours * 60 + minutes;
+
+    if (prayerMinutes > currentMinutes) {
+      return prayer;
+    }
+  }
+
+  return null;
+};
+
+export const getTimeRemaining = (
+  prayerTime: string,
+  currentTime: Date
+): string => {
+  const [hours, minutes] = prayerTime.split(':').map(Number);
+  const prayerDate = new Date(currentTime);
+  prayerDate.setHours(hours, minutes, 0, 0);
+
+  const diff = prayerDate.getTime() - currentTime.getTime();
+  const totalMinutes = Math.floor(diff / 1000 / 60);
+  const remainingHours = Math.floor(totalMinutes / 60);
+  const remainingMinutes = totalMinutes % 60;
+
+  if (remainingHours > 0) {
+    return `${remainingHours} ساعة و ${remainingMinutes} دقيقة`;
+  }
+  return `${remainingMinutes} دقيقة`;
+};
+
+export const getHijriDate = (gregorianDate: Date): string => {
+  // استخدام Intl.DateTimeFormat للحصول على تاريخ هجري دقيق مع اسم الشهر
+  const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  return formatter.format(gregorianDate);
+};
+
+export const formatGregorianDate = (date: Date): string => {
+  const arabicMonths = [
+    'كانون الثاني',
+    'شباط',
+    'آذار',
+    'نيسان',
+    'أيار',
+    'حزيران',
+    'تموز',
+    'آب',
+    'أيلول',
+    'تشرين الأول',
+    'تشرين الثاني',
+    'كانون الأول',
+  ];
+
+  const day = date.getDate();
+  const month = arabicMonths[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+};
