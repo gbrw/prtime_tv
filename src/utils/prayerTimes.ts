@@ -117,3 +117,16 @@ export const getDayName = (date: Date): string => {
 
   return arabicDays[date.getDay()];
 };
+
+// حساب عدد الثواني المتبقية للصلاة
+export const getSecondsRemaining = (
+  prayerTime: string,
+  currentTime: Date
+): number => {
+  const [hours, minutes] = prayerTime.split(':').map(Number);
+  const prayerDate = new Date(currentTime);
+  prayerDate.setHours(hours, minutes, 0, 0);
+
+  const diff = prayerDate.getTime() - currentTime.getTime();
+  return Math.floor(diff / 1000);
+};

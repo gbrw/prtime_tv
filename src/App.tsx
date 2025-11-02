@@ -8,6 +8,7 @@ import {
   getHijriDate,
   formatGregorianDate,
   getDayName,
+  getSecondsRemaining,
 } from './utils/prayerTimes';
 import PrayerCard from './components/PrayerCard';
 import DateDisplay from './components/DateDisplay';
@@ -21,6 +22,8 @@ function App() {
   } | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<string>('');
   const [testMode, setTestMode] = useState(false);
+  const [showCountdownModal, setShowCountdownModal] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(0);
 
   const data = prayerData as PrayerData;
 
@@ -52,14 +55,27 @@ function App() {
       if (next) {
         const remaining = getTimeRemaining(next.time, currentTime);
         setTimeRemaining(remaining);
+        
+        // حساب الثواني المتبقية
+        const seconds = getSecondsRemaining(next.time, currentTime);
+        setSecondsLeft(seconds);
+        
+        // إظهار النافذة عندما يكون الوقت المتبقي ≤ 15 دقيقة و > -60 ثانية (دقيقة بعد وقت الصلاة)
+        const shouldShow = seconds <= 900 && seconds > -60;
+        setShowCountdownModal(shouldShow);
+      } else {
+        setShowCountdownModal(false);
       }
     }
-  }, [currentTime]);
+  }, [currentTime, data]);
 
   useEffect(() => {
+    // تحديث كل ثانية عند ظهور النافذة، كل دقيقة عند إخفائها
+    const interval = showCountdownModal ? 1000 : 60000;
+    
     const timer = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000);
+    }, interval);
 
     // الضغط على مفتاح 'T' لإظهار/إخفاء أدوات الاختبار
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -74,7 +90,7 @@ function App() {
       clearInterval(timer);
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, []);
+  }, [showCountdownModal]);
 
   if (!todayPrayers) {
     return (
@@ -144,8 +160,51 @@ function App() {
     { name: 'العشاء', time: convertTo12Hour(todayPrayers.العشاء, 'العشاء') },
   ];
 
+  // تنسيق العداد التنازلي (دقائق:ثواني)
+  const formatCountdown = (totalSeconds: number): string => {
+    if (totalSeconds <= 0) return '00:00';
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden" dir="rtl">
+      {/* نافذة العد التنازلي */}
+      {showCountdownModal && nextPrayer && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+          <div className="text-center px-8">
+            {secondsLeft > 0 ? (
+              // العد التنازلي
+              <>
+                <h1 className="text-7xl md:text-8xl font-bold text-blue-300 mb-12 drop-shadow-2xl">
+                  الوقت المتبقي لصلاة {nextPrayer.name}
+                </h1>
+                <div className="text-[12rem] md:text-[15rem] font-extrabold text-white mb-8 tracking-wider tabular-nums drop-shadow-2xl">
+                  {formatCountdown(secondsLeft)}
+                </div>
+                <p className="text-5xl md:text-6xl text-blue-200 font-semibold">
+                  دقيقة : ثانية
+                </p>
+              </>
+            ) : (
+              // حان وقت الصلاة
+              <div className="animate-pulse">
+                <h1 className="text-[10rem] md:text-[12rem] font-extrabold text-green-400 mb-12 drop-shadow-2xl">
+                  🕌
+                </h1>
+                <h2 className="text-8xl md:text-9xl font-bold text-green-300 mb-8 drop-shadow-2xl">
+                  حان وقت الصلاة
+                </h2>
+                <p className="text-7xl md:text-8xl font-bold text-white drop-shadow-2xl">
+                  صلاة {nextPrayer.name}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      
       <div className="h-full flex flex-col p-2">
         {/* التواريخ */}
         <div className="flex-none">
@@ -197,61 +256,175 @@ function App() {
 
         {/* أدوات الاختبار - تظهر عند الضغط على T */}
         {testMode && (
-          <div className="fixed bottom-4 left-4 bg-slate-800 p-4 rounded-lg shadow-2xl border-2 border-blue-500 z-50">
-            <h3 className="text-white text-xl font-bold mb-3 text-center">أدوات الاختبار</h3>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
+          <div className="fixed bottom-4 left-4 bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl shadow-2xl border-2 border-blue-500 z-50 max-w-md">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-white text-2xl font-bold">⚙️ أدوات الاختبار</h3>
+              <button
+                onClick={() => setTestMode(false)}
+                className="text-red-400 hover:text-red-300 text-2xl font-bold"
+                title="إغلاق (اضغط T)"
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* معلومات الوقت الحالي */}
+            <div className="bg-slate-700 rounded-lg p-3 mb-4">
+              <p className="text-blue-300 text-sm mb-1">⏰ الوقت الحالي:</p>
+              <p className="text-white text-lg font-mono">{currentTime.toLocaleTimeString('ar-SA')}</p>
+              <p className="text-blue-300 text-sm mt-2 mb-1">📅 التاريخ:</p>
+              <p className="text-white text-lg">{currentTime.toLocaleDateString('ar-SA')}</p>
+              {nextPrayer && (
+                <>
+                  <p className="text-green-300 text-sm mt-2 mb-1">🕌 الصلاة القادمة:</p>
+                  <p className="text-white text-lg">{nextPrayer.name}</p>
+                  <p className="text-yellow-300 text-sm mt-2 mb-1">⏳ الثواني المتبقية:</p>
+                  <p className="text-white text-lg font-mono">{secondsLeft} ثانية ({Math.floor(secondsLeft / 60)} دقيقة)</p>
+                  <p className="text-purple-300 text-sm mt-2 mb-1">📊 حالة النافذة:</p>
+                  <p className="text-white text-lg">{showCountdownModal ? '✅ معروضة' : '❌ مخفية'}</p>
+                </>
+              )}
+            </div>
+
+            {/* أزرار التحكم بالدقائق */}
+            <div className="mb-3">
+              <p className="text-blue-300 text-sm mb-2 font-semibold">⏱️ إضافة دقائق:</p>
+              <div className="grid grid-cols-4 gap-2">
                 <button
-                  onClick={() => addMinutes(30)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
+                  onClick={() => addMinutes(1)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded text-sm font-semibold"
                 >
-                  +30 دقيقة
+                  +1 د
                 </button>
                 <button
-                  onClick={() => addHours(1)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
+                  onClick={() => addMinutes(5)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded text-sm font-semibold"
                 >
-                  +1 ساعة
+                  +5 د
+                </button>
+                <button
+                  onClick={() => addMinutes(10)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  +10 د
+                </button>
+                <button
+                  onClick={() => addMinutes(15)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  +15 د
+                </button>
+              </div>
+            </div>
+
+            {/* أزرار التحكم بالساعات */}
+            <div className="mb-3">
+              <p className="text-blue-300 text-sm mb-2 font-semibold">🕐 إضافة ساعات:</p>
+              <div className="grid grid-cols-4 gap-2">
+                <button
+                  onClick={() => addHours(1)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  +1 س
+                </button>
+                <button
+                  onClick={() => addHours(2)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  +2 س
                 </button>
                 <button
                   onClick={() => addHours(3)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-semibold"
                 >
-                  +3 ساعات
+                  +3 س
+                </button>
+                <button
+                  onClick={() => addHours(6)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  +6 س
                 </button>
               </div>
-              <div className="flex gap-2">
+            </div>
+
+            {/* أزرار التحكم بالأيام */}
+            <div className="mb-3">
+              <p className="text-blue-300 text-sm mb-2 font-semibold">📆 إضافة أيام:</p>
+              <div className="grid grid-cols-4 gap-2">
                 <button
                   onClick={() => addDays(1)}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-semibold"
                 >
                   +1 يوم
                 </button>
                 <button
                   onClick={() => addDays(7)}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-semibold"
                 >
-                  +7 أيام
+                  +أسبوع
                 </button>
                 <button
                   onClick={() => addDays(30)}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-semibold"
                 >
-                  +30 يوم
+                  +شهر
+                </button>
+                <button
+                  onClick={() => addDays(365)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  +سنة
                 </button>
               </div>
-              <button
-                onClick={resetTime}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm w-full"
-              >
-                إعادة ضبط الوقت
-              </button>
-              <div className="text-white text-sm text-center mt-2 pt-2 border-t border-slate-600">
-                الوقت الحالي: {currentTime.toLocaleTimeString('ar-SA')}
-                <br />
-                التاريخ: {currentTime.toLocaleDateString('ar-SA')}
+            </div>
+
+            {/* اختصارات سريعة */}
+            <div className="mb-3">
+              <p className="text-yellow-300 text-sm mb-2 font-semibold">⚡ اختصارات سريعة:</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => {
+                    if (nextPrayer) {
+                      // الانتقال لـ 20 دقيقة قبل الصلاة القادمة
+                      const [hours, minutes] = nextPrayer.time.split(':').map(Number);
+                      const prayerTime = new Date(currentTime);
+                      prayerTime.setHours(hours, minutes - 20, 0, 0);
+                      setCurrentTime(prayerTime);
+                    }
+                  }}
+                  className="bg-orange-600 hover:bg-orange-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  ⏩ قبل الصلاة بـ20د
+                </button>
+                <button
+                  onClick={() => {
+                    if (nextPrayer) {
+                      // الانتقال لـ 1 دقيقة قبل الصلاة القادمة
+                      const [hours, minutes] = nextPrayer.time.split(':').map(Number);
+                      const prayerTime = new Date(currentTime);
+                      prayerTime.setHours(hours, minutes - 1, 0, 0);
+                      setCurrentTime(prayerTime);
+                    }
+                  }}
+                  className="bg-orange-600 hover:bg-orange-700 text-white px-3 py-2 rounded text-sm font-semibold"
+                >
+                  ⏩ قبل الصلاة بـ1د
+                </button>
               </div>
             </div>
+
+            {/* زر إعادة الضبط */}
+            <button
+              onClick={resetTime}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-base w-full font-bold shadow-lg"
+            >
+              🔄 إعادة ضبط الوقت الحقيقي
+            </button>
+            
+            <p className="text-gray-400 text-xs text-center mt-3">
+              اضغط T للإغلاق
+            </p>
           </div>
         )}
       </div>
