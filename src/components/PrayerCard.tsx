@@ -22,8 +22,8 @@ export default function PrayerCard({ name, time, isNext }: PrayerCardProps) {
         {time}
       </p>
       {isNext && (
-        <div className="mt-3 text-center">
-          <span className="inline-block bg-white text-green-700 px-4 py-1.5 rounded-full text-xl font-bold animate-pulse">
+        <div className="mt-2 text-center">
+          <span className="inline-block bg-white text-green-700 px-2 py-1 rounded-full text-sm font-bold animate-pulse">
             الصلاة القادمة
           </span>
         </div>
