@@ -24,17 +24,9 @@ function App() {
   const [testMode, setTestMode] = useState(false);
   const [showCountdownModal, setShowCountdownModal] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const [hijriOffset, setHijriOffset] = useState(() => {
-    const saved = localStorage.getItem('hijriOffset');
-    return saved ? parseInt(saved, 10) : 0;
-  });
+  const [hijriOffset, setHijriOffset] = useState(0);
 
   const data = prayerData as PrayerData;
-
-  // حفظ hijriOffset في localStorage
-  useEffect(() => {
-    localStorage.setItem('hijriOffset', hijriOffset.toString());
-  }, [hijriOffset]);
 
   // دالة لتغيير الوقت للاختبار
   const addMinutes = (minutes: number) => {
