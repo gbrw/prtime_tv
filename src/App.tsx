@@ -264,7 +264,7 @@ function App() {
         </div>
       )}
       
-      <div className="h-full flex flex-col p-2">
+      <div className="h-full flex flex-col p-4 gap-3">
         {/* التواريخ */}
         <div className="flex-none">
           <DateDisplay
@@ -277,24 +277,24 @@ function App() {
         </div>
 
         {/* الوقت المتبقي والوقت الحالي */}
-        <div className="flex-none grid grid-cols-2 gap-2 mb-2">
+        <div className="flex-none grid grid-cols-2 gap-3">
           {/* بطاقة الوقت الحالي */}
-          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-6 shadow-2xl">
-            <h2 className="text-4xl font-bold text-white text-center mb-3">
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-5 shadow-2xl">
+            <h2 className="text-3xl font-bold text-white text-center mb-2">
               الوقت الحالي
             </h2>
-            <p className="text-7xl font-extrabold text-white text-center tracking-wide">
+            <p className="text-6xl font-extrabold text-white text-center tracking-wide">
               {getCurrentTime12Hour()}
             </p>
           </div>
 
           {/* بطاقة الوقت المتبقي */}
           {nextPrayer && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 shadow-2xl">
-              <h2 className="text-4xl font-bold text-white text-center mb-3">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-5 shadow-2xl">
+              <h2 className="text-3xl font-bold text-white text-center mb-2">
                 الوقت المتبقي لصلاة {nextPrayer.name}
               </h2>
-              <p className="text-7xl font-extrabold text-white text-center tracking-wide">
+              <p className="text-6xl font-extrabold text-white text-center tracking-wide">
                 {timeRemaining}
               </p>
             </div>
@@ -302,8 +302,8 @@ function App() {
         </div>
 
         {/* بطاقات الصلاة - تأخذ المساحة المتبقية */}
-        <div className="flex-1 min-h-0 pb-2">
-          <div className="h-full grid grid-cols-3 gap-2">
+        <div className="flex-1 min-h-0">
+          <div className="h-full grid grid-cols-3 grid-rows-2 gap-3">
             {prayers.map((prayer) => (
               <PrayerCard
                 key={prayer.name}
