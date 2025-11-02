@@ -23,7 +23,7 @@ function App() {
   const [timeRemaining, setTimeRemaining] = useState<string>('');
   const [testMode, setTestMode] = useState(false);
   const [showCountdownModal, setShowCountdownModal] = useState(false);
-  const [secondsLeft, setSecondsLeft] = useState(0);
+  const [secondsLeft, setSecondsLeft] = useState(9999); // قيمة كبيرة لتجنب تشغيل الصوت عند التحميل
   const [hijriOffset, setHijriOffset] = useState(-1);
   const [soundPlayed, setSoundPlayed] = useState(false);
 
@@ -111,6 +111,11 @@ function App() {
 
   // تشغيل الصوت عندما يحين وقت الصلاة
   useEffect(() => {
+    // تجنب تشغيل الصوت عند التحميل الأولي أو عندما لا توجد بيانات
+    if (secondsLeft === 9999 || !nextPrayer) {
+      return;
+    }
+    
     // عندما تكون الثواني المتبقية بين 0 و -5 (أول 5 ثوانٍ بعد وقت الصلاة)
     if (secondsLeft <= 0 && secondsLeft > -5 && !soundPlayed) {
       playNotificationSound();
@@ -121,7 +126,7 @@ function App() {
     if (secondsLeft > 10 || secondsLeft < -60) {
       setSoundPlayed(false);
     }
-  }, [secondsLeft, soundPlayed]);
+  }, [secondsLeft, soundPlayed, nextPrayer]);
 
   useEffect(() => {
     // تحديث كل ثانية عند ظهور النافذة، كل دقيقة عند إخفائها
