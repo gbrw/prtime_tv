@@ -24,7 +24,7 @@ function App() {
   const [testMode, setTestMode] = useState(false);
   const [showCountdownModal, setShowCountdownModal] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(0);
-  const [hijriOffset, setHijriOffset] = useState(0);
+  const [hijriOffset, setHijriOffset] = useState(-1);
 
   const data = prayerData as PrayerData;
 
