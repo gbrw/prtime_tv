@@ -24,8 +24,17 @@ function App() {
   const [testMode, setTestMode] = useState(false);
   const [showCountdownModal, setShowCountdownModal] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(0);
+  const [hijriOffset, setHijriOffset] = useState(() => {
+    const saved = localStorage.getItem('hijriOffset');
+    return saved ? parseInt(saved, 10) : 0;
+  });
 
   const data = prayerData as PrayerData;
+
+  // حفظ hijriOffset في localStorage
+  useEffect(() => {
+    localStorage.setItem('hijriOffset', hijriOffset.toString());
+  }, [hijriOffset]);
 
   // دالة لتغيير الوقت للاختبار
   const addMinutes = (minutes: number) => {
@@ -209,31 +218,33 @@ function App() {
         {/* التواريخ */}
         <div className="flex-none">
           <DateDisplay
-            hijriDate={getHijriDate(currentTime)}
+            hijriDate={getHijriDate(currentTime, hijriOffset)}
             gregorianDate={formatGregorianDate(currentTime)}
             dayName={getDayName(currentTime)}
+            hijriOffset={hijriOffset}
+            onHijriOffsetChange={setHijriOffset}
           />
         </div>
 
         {/* الوقت المتبقي والوقت الحالي */}
         <div className="flex-none grid grid-cols-2 gap-2 mb-2">
           {/* بطاقة الوقت الحالي */}
-          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-3 shadow-2xl">
-            <h2 className="text-xl font-bold text-white text-center mb-1">
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-6 shadow-2xl">
+            <h2 className="text-4xl font-bold text-white text-center mb-3">
               الوقت الحالي
             </h2>
-            <p className="text-4xl font-extrabold text-white text-center tracking-wide">
+            <p className="text-7xl font-extrabold text-white text-center tracking-wide">
               {getCurrentTime12Hour()}
             </p>
           </div>
 
           {/* بطاقة الوقت المتبقي */}
           {nextPrayer && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-3 shadow-2xl">
-              <h2 className="text-xl font-bold text-white text-center mb-1">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 shadow-2xl">
+              <h2 className="text-4xl font-bold text-white text-center mb-3">
                 الوقت المتبقي لصلاة {nextPrayer.name}
               </h2>
-              <p className="text-4xl font-extrabold text-white text-center tracking-wide">
+              <p className="text-7xl font-extrabold text-white text-center tracking-wide">
                 {timeRemaining}
               </p>
             </div>

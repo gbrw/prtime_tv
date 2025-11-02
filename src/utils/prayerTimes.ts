@@ -48,7 +48,8 @@ export const getNextPrayer = (
     }
   }
 
-  return null;
+  // إذا لم نجد صلاة قادمة (بعد العشاء)، نرجع صلاة الفجر لليوم التالي
+  return { name: 'الفجر', time: prayerTimes.الفجر };
 };
 
 export const getTimeRemaining = (
@@ -58,6 +59,11 @@ export const getTimeRemaining = (
   const [hours, minutes] = prayerTime.split(':').map(Number);
   const prayerDate = new Date(currentTime);
   prayerDate.setHours(hours, minutes, 0, 0);
+
+  // إذا كان وقت الصلاة قد مضى، أضف يوم واحد
+  if (prayerDate.getTime() <= currentTime.getTime()) {
+    prayerDate.setDate(prayerDate.getDate() + 1);
+  }
 
   const diff = prayerDate.getTime() - currentTime.getTime();
   const totalMinutes = Math.floor(diff / 1000 / 60);
@@ -70,7 +76,11 @@ export const getTimeRemaining = (
   return `${remainingMinutes} دقيقة`;
 };
 
-export const getHijriDate = (gregorianDate: Date): string => {
+export const getHijriDate = (gregorianDate: Date, offsetDays: number = 0): string => {
+  // إنشاء نسخة من التاريخ وإضافة الأيام المطلوبة
+  const adjustedDate = new Date(gregorianDate);
+  adjustedDate.setDate(adjustedDate.getDate() + offsetDays);
+  
   // استخدام Intl.DateTimeFormat للحصول على تاريخ هجري دقيق مع اسم الشهر
   const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
     day: 'numeric',
@@ -78,7 +88,7 @@ export const getHijriDate = (gregorianDate: Date): string => {
     year: 'numeric',
   });
 
-  return formatter.format(gregorianDate);
+  return formatter.format(adjustedDate);
 };
 
 export const formatGregorianDate = (date: Date): string => {
@@ -126,6 +136,11 @@ export const getSecondsRemaining = (
   const [hours, minutes] = prayerTime.split(':').map(Number);
   const prayerDate = new Date(currentTime);
   prayerDate.setHours(hours, minutes, 0, 0);
+
+  // إذا كان وقت الصلاة قد مضى، أضف يوم واحد
+  if (prayerDate.getTime() <= currentTime.getTime()) {
+    prayerDate.setDate(prayerDate.getDate() + 1);
+  }
 
   const diff = prayerDate.getTime() - currentTime.getTime();
   return Math.floor(diff / 1000);
