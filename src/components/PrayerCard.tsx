@@ -15,10 +15,10 @@ export default function PrayerCard({ name, time, isNext }: PrayerCardProps) {
           : 'bg-gradient-to-br from-slate-700 to-slate-800 shadow-lg'
       }`}
     >
-      <h3 className="text-3xl font-bold text-white text-center mb-3">
+      <h3 className="text-2xl font-bold text-white text-center mb-2">
         {name}
       </h3>
-      <p className="text-6xl font-extrabold text-white text-center tracking-wider">
+      <p className="text-5xl font-extrabold text-white text-center tracking-wider">
         {time}
       </p>
       {isNext && (
