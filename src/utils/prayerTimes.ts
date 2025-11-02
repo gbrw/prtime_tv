@@ -103,3 +103,17 @@ export const formatGregorianDate = (date: Date): string => {
 
   return `${day} ${month} ${year}`;
 };
+
+export const getDayName = (date: Date): string => {
+  const arabicDays = [
+    'الأحد',
+    'الاثنين',
+    'الثلاثاء',
+    'الأربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
+  ];
+
+  return arabicDays[date.getDay()];
+};

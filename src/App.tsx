@@ -7,6 +7,7 @@ import {
   getTimeRemaining,
   getHijriDate,
   formatGregorianDate,
+  getDayName,
 } from './utils/prayerTimes';
 import PrayerCard from './components/PrayerCard';
 import DateDisplay from './components/DateDisplay';
@@ -151,13 +152,14 @@ function App() {
           <DateDisplay
             hijriDate={getHijriDate(currentTime)}
             gregorianDate={formatGregorianDate(currentTime)}
+            dayName={getDayName(currentTime)}
           />
         </div>
 
         {/* الوقت المتبقي والوقت الحالي */}
         <div className="flex-none grid grid-cols-2 gap-2 mb-2">
           {/* بطاقة الوقت الحالي */}
-          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-3 shadow-2xl">
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-3 shadow-2xl">
             <h2 className="text-xl font-bold text-white text-center mb-1">
               الوقت الحالي
             </h2>
