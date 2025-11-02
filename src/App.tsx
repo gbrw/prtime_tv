@@ -25,8 +25,61 @@ function App() {
   const [showCountdownModal, setShowCountdownModal] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [hijriOffset, setHijriOffset] = useState(-1);
+  const [soundPlayed, setSoundPlayed] = useState(false);
 
   const data = prayerData as PrayerData;
+
+  // تشغيل صوت التنبيه
+  const playNotificationSound = () => {
+    try {
+      // إنشاء صوت تنبيه باستخدام Web Audio API
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      // نغمة جميلة للأذان
+      oscillator.frequency.value = 600; // تردد النغمة
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 2);
+      
+      // تكرار النغمة 3 مرات
+      setTimeout(() => {
+        const osc2 = audioContext.createOscillator();
+        const gain2 = audioContext.createGain();
+        osc2.connect(gain2);
+        gain2.connect(audioContext.destination);
+        osc2.frequency.value = 700;
+        osc2.type = 'sine';
+        gain2.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
+        osc2.start(audioContext.currentTime);
+        osc2.stop(audioContext.currentTime + 2);
+      }, 500);
+      
+      setTimeout(() => {
+        const osc3 = audioContext.createOscillator();
+        const gain3 = audioContext.createGain();
+        osc3.connect(gain3);
+        gain3.connect(audioContext.destination);
+        osc3.frequency.value = 800;
+        osc3.type = 'sine';
+        gain3.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gain3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
+        osc3.start(audioContext.currentTime);
+        osc3.stop(audioContext.currentTime + 2);
+      }, 1000);
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
 
   // دالة لتغيير الوقت للاختبار
   const addMinutes = (minutes: number) => {
@@ -69,6 +122,20 @@ function App() {
       }
     }
   }, [currentTime, data]);
+
+  // تشغيل الصوت عندما يحين وقت الصلاة
+  useEffect(() => {
+    // عندما تكون الثواني المتبقية بين 0 و -5 (أول 5 ثوانٍ بعد وقت الصلاة)
+    if (secondsLeft <= 0 && secondsLeft > -5 && !soundPlayed) {
+      playNotificationSound();
+      setSoundPlayed(true);
+    }
+    
+    // إعادة تعيين soundPlayed عندما نبتعد عن وقت الصلاة
+    if (secondsLeft > 10 || secondsLeft < -60) {
+      setSoundPlayed(false);
+    }
+  }, [secondsLeft, soundPlayed]);
 
   useEffect(() => {
     // تحديث كل ثانية عند ظهور النافذة، كل دقيقة عند إخفائها
