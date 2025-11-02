@@ -145,7 +145,7 @@ function App() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden" dir="rtl">
-      <div className="h-full flex flex-col p-3">
+      <div className="h-full flex flex-col p-2">
         {/* التواريخ */}
         <div className="flex-none">
           <DateDisplay
@@ -155,24 +155,24 @@ function App() {
         </div>
 
         {/* الوقت المتبقي والوقت الحالي */}
-        <div className="flex-none grid grid-cols-2 gap-3 mb-2">
+        <div className="flex-none grid grid-cols-2 gap-2 mb-2">
           {/* بطاقة الوقت الحالي */}
-          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-4 shadow-2xl">
-            <h2 className="text-2xl font-bold text-white text-center mb-2">
+          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl p-3 shadow-2xl">
+            <h2 className="text-xl font-bold text-white text-center mb-1">
               الوقت الحالي
             </h2>
-            <p className="text-5xl font-extrabold text-white text-center tracking-wide">
+            <p className="text-4xl font-extrabold text-white text-center tracking-wide">
               {getCurrentTime12Hour()}
             </p>
           </div>
 
           {/* بطاقة الوقت المتبقي */}
           {nextPrayer && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 shadow-2xl">
-              <h2 className="text-2xl font-bold text-white text-center mb-2">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-3 shadow-2xl">
+              <h2 className="text-xl font-bold text-white text-center mb-1">
                 الوقت المتبقي لصلاة {nextPrayer.name}
               </h2>
-              <p className="text-5xl font-extrabold text-white text-center tracking-wide">
+              <p className="text-4xl font-extrabold text-white text-center tracking-wide">
                 {timeRemaining}
               </p>
             </div>
@@ -180,8 +180,8 @@ function App() {
         </div>
 
         {/* بطاقات الصلاة - تأخذ المساحة المتبقية */}
-        <div className="flex-1 min-h-0 pb-3">
-          <div className="h-full grid grid-cols-3 gap-3">
+        <div className="flex-1 min-h-0 pb-2">
+          <div className="h-full grid grid-cols-3 gap-2">
             {prayers.map((prayer) => (
               <PrayerCard
                 key={prayer.name}
