@@ -279,22 +279,22 @@ function App() {
         {/* الوقت المتبقي والوقت الحالي */}
         <div className="flex-none grid grid-cols-2 gap-3">
           {/* بطاقة الوقت الحالي */}
-          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-5 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white text-center mb-2">
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl p-3 shadow-2xl">
+            <h2 className="text-2xl font-bold text-white text-center mb-1">
               الوقت الحالي
             </h2>
-            <p className="text-6xl font-extrabold text-white text-center tracking-wide">
+            <p className="text-4xl font-extrabold text-white text-center tracking-wide">
               {getCurrentTime12Hour()}
             </p>
           </div>
 
           {/* بطاقة الوقت المتبقي */}
           {nextPrayer && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-5 shadow-2xl">
-              <h2 className="text-3xl font-bold text-white text-center mb-2">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-3 shadow-2xl">
+              <h2 className="text-2xl font-bold text-white text-center mb-1">
                 الوقت المتبقي لصلاة {nextPrayer.name}
               </h2>
-              <p className="text-6xl font-extrabold text-white text-center tracking-wide">
+              <p className="text-4xl font-extrabold text-white text-center tracking-wide">
                 {timeRemaining}
               </p>
             </div>
