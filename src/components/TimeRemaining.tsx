@@ -9,7 +9,7 @@ export default function TimeRemaining({
 }: TimeRemainingProps) {
   return (
     <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 shadow-2xl mb-2">
-      <h2 className="text-2xl font-bold text-white text-center mb-2">
+      <h2 className="text-xl font-bold text-white text-center mb-2">
         الوقت المتبقي لصلاة {nextPrayerName}
       </h2>
       <p className="text-5xl font-extrabold text-white text-center tracking-wide">
