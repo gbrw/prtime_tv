@@ -236,13 +236,13 @@ function App() {
             {secondsLeft > 0 ? (
               // العد التنازلي
               <>
-                <h1 className="text-5xl md:text-6xl font-bold text-blue-300 mb-12 drop-shadow-2xl">
+                <h1 className="text-3xl md:text-4xl font-bold text-blue-300 mb-12 drop-shadow-2xl">
                   الوقت المتبقي لصلاة {nextPrayer.name}
                 </h1>
                 <div className="text-[12rem] md:text-[15rem] font-extrabold text-white mb-8 tracking-wider tabular-nums drop-shadow-2xl">
                   {formatCountdown(secondsLeft)}
                 </div>
-                <p className="text-5xl md:text-6xl text-blue-200 font-semibold">
+                <p className="text-3xl md:text-4xl text-blue-200 font-semibold">
                   دقيقة : ثانية
                 </p>
               </>
@@ -252,10 +252,10 @@ function App() {
                 <h1 className="text-[10rem] md:text-[12rem] font-extrabold text-green-400 mb-12 drop-shadow-2xl">
                   🕌
                 </h1>
-                <h2 className="text-6xl md:text-7xl font-bold text-green-300 mb-8 drop-shadow-2xl">
+                <h2 className="text-4xl md:text-5xl font-bold text-green-300 mb-8 drop-shadow-2xl">
                   حان وقت الصلاة
                 </h2>
-                <p className="text-7xl md:text-8xl font-bold text-white drop-shadow-2xl">
+                <p className="text-5xl md:text-6xl font-bold text-white drop-shadow-2xl">
                   صلاة {nextPrayer.name}
                 </p>
               </div>
