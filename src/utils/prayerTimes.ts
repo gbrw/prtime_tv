@@ -137,11 +137,7 @@ export const getSecondsRemaining = (
   const prayerDate = new Date(currentTime);
   prayerDate.setHours(hours, minutes, 0, 0);
 
-  // إذا كان وقت الصلاة قد مضى، أضف يوم واحد
-  if (prayerDate.getTime() <= currentTime.getTime()) {
-    prayerDate.setDate(prayerDate.getDate() + 1);
-  }
-
+  // السماح للثواني بأن تكون سالبة لإظهار "حان وقت الصلاة"
   const diff = prayerDate.getTime() - currentTime.getTime();
   return Math.floor(diff / 1000);
 };

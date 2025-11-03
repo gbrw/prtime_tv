@@ -236,7 +236,7 @@ function App() {
             {secondsLeft > 0 ? (
               // العد التنازلي
               <>
-                <h1 className="text-3xl md:text-4xl font-bold text-blue-300 mb-20 drop-shadow-2xl">
+                <h1 className="text-3xl md:text-4xl font-bold text-blue-300 mb-32 drop-shadow-2xl">
                   الوقت المتبقي لصلاة {nextPrayer.name}
                 </h1>
                 <div className="text-[12rem] md:text-[15rem] font-extrabold text-white mb-8 tracking-wider tabular-nums drop-shadow-2xl">
