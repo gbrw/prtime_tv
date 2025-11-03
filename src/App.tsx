@@ -100,8 +100,8 @@ function App() {
         const seconds = getSecondsRemaining(next.time, currentTime);
         setSecondsLeft(seconds);
         
-        // إظهار النافذة عندما يكون الوقت المتبقي ≤ 15 دقيقة و > -60 ثانية (دقيقة بعد وقت الصلاة)
-        const shouldShow = seconds <= 900 && seconds > -60;
+        // إظهار النافذة عندما يكون الوقت المتبقي ≤ 15 دقيقة و > -15 ثانية (15 ثانية بعد وقت الصلاة)
+        const shouldShow = seconds <= 900 && seconds > -15;
         setShowCountdownModal(shouldShow);
       } else {
         setShowCountdownModal(false);
@@ -123,7 +123,7 @@ function App() {
     }
     
     // إعادة تعيين soundPlayed عندما نبتعد عن وقت الصلاة
-    if (secondsLeft > 10 || secondsLeft < -60) {
+    if (secondsLeft > 10 || secondsLeft < -15) {
       setSoundPlayed(false);
     }
   }, [secondsLeft, soundPlayed, nextPrayer]);
