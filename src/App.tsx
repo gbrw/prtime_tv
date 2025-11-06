@@ -239,7 +239,7 @@ function App() {
                 <h1 className="text-3xl md:text-4xl font-bold text-blue-300 mb-32 drop-shadow-2xl">
                   الوقت المتبقي لصلاة {nextPrayer.name}
                 </h1>
-                <div className="text-[12rem] md:text-[15rem] font-extrabold text-white mb-2 tracking-wider tabular-nums drop-shadow-2xl">
+                <div className="text-[12rem] md:text-[15rem] font-extrabold text-white mt-[-20px] tracking-wider tabular-nums drop-shadow-2xl">
                   {formatCountdown(secondsLeft)}
                 </div>
               </>
