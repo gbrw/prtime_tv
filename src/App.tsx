@@ -232,7 +232,7 @@ function App() {
       {/* نافذة العد التنازلي */}
       {showCountdownModal && nextPrayer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-          <div className="text-center px-8">
+          <div className="text-center px-8 pt-40">
             {secondsLeft > 0 ? (
               // العد التنازلي
               <>
