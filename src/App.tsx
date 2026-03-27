@@ -24,7 +24,7 @@ function App() {
   const [testMode, setTestMode] = useState(false);
   const [showCountdownModal, setShowCountdownModal] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(9999); // قيمة كبيرة لتجنب تشغيل الصوت عند التحميل
-  const [hijriOffset, setHijriOffset] = useState(0); //من هنا تعديل التاريخ الهجري +1 او -1 ....الخ
+  const [hijriOffset, setHijriOffset] = useState(+1); //من هنا تعديل التاريخ الهجري +1 او -1 ....الخ
   const [soundPlayed, setSoundPlayed] = useState(false);
 
   const data = prayerData as PrayerData;
