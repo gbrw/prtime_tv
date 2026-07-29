@@ -2,25 +2,44 @@
 
 <div align="center">
 
-واجهة ويب حديثة لعرض مواقيت الصلاة على شاشات التلفاز والشاشات الكبيرة، مع تحديث الوقت والعد التنازلي للصلاة القادمة بشكل مباشر.
+واجهة ويب حديثة لعرض مواقيت الصلاة على الشاشات الكبيرة، مع تحديث الوقت والعد التنازلي للصلاة القادمة بشكل مباشر.
 
-![PRTime TV](assets/screenshot.PNG)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://prtime-tv.vercel.app/)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+### 🌐 تجربة مباشرة
+
+**https://prtime-tv.vercel.app/**
 
 </div>
+
+---
+
+## 📸 لقطة شاشة
+
+<p align="center">
+  <img src="assets/screenshot.PNG" alt="PRTime TV" width="900">
+</p>
+
+---
 
 ## ✨ المميزات
 
 - 🕒 عرض الوقت الحالي بشكل مباشر.
 - 📅 عرض التاريخ الميلادي والهجري.
-- 🗓️ عرض اسم اليوم.
+- 📆 عرض اسم اليوم.
 - 🕌 عرض جميع مواقيت الصلوات اليومية.
-- ⏳ عد تنازلي حي حتى موعد الصلاة القادمة.
-- 📌 تمييز الصلاة القادمة تلقائيًا.
 - 🌅 عرض وقت الشروق.
-- ➕➖ إمكانية تعديل التاريخ الهجري (Hijri Offset).
-- 📺 تصميم مخصص للشاشات الكبيرة (TV Dashboard).
-- ⚡ تحديث البيانات والوقت بشكل لحظي.
-- 🎨 واجهة عربية حديثة وسهلة القراءة.
+- ⏳ عد تنازلي مباشر حتى الصلاة القادمة.
+- 📌 تمييز الصلاة القادمة تلقائيًا.
+- ➕➖ تعديل التاريخ الهجري (Hijri Offset).
+- 📺 واجهة محسنة للشاشات الكبيرة.
+- ⚡ تحديث البيانات بشكل لحظي.
+
+---
 
 ## 🛠️ التقنيات المستخدمة
 
@@ -30,17 +49,12 @@
 - Tailwind CSS
 - Lucide React
 
-## 🚀 التشغيل
+---
 
-### تثبيت الاعتمادات
+## 🚀 التشغيل
 
 ```bash
 npm install
-```
-
-### تشغيل المشروع
-
-```bash
 npm run dev
 ```
 
@@ -56,63 +70,27 @@ npm run build
 npm run preview
 ```
 
-## 📁 هيكل المشروع
+---
 
-```text
-src/
-├── components/
-├── data/
-├── hooks/
-├── types/
-├── utils/
-├── App.tsx
-└── main.tsx
-```
+## 🌍 النشر
 
-## 📷 لقطة شاشة
+يمكن نشر المشروع على أي استضافة للمواقع الثابتة مثل:
 
-ضع صورة للواجهة داخل:
-
-```text
-assets/screenshot.PNG
-```
-
-وسيتم عرضها تلقائيًا في أعلى صفحة GitHub.
-
-## 🌐 النشر
-
-يمكن نشر المشروع على:
-
-- GitHub Pages
 - Vercel
+- GitHub Pages
 - Netlify
 - Firebase Hosting
-- أي استضافة تدعم المواقع الثابتة
 
-بعد تنفيذ:
-
-```bash
-npm run build
-```
-
-سيتم إنشاء مجلد:
-
-```text
-dist/
-```
-
-وهو المجلد الجاهز للنشر.
+---
 
 ## 📄 الترخيص
 
-MIT License
+هذا المشروع مرخص بموجب **MIT License**.
 
 ---
 
 <div align="center">
 
-إذا أعجبك المشروع، لا تنسَ ⭐ دعم المستودع.
-
-Made with ❤️ using React + TypeScript + Vite
+⭐ إذا أعجبك المشروع، لا تنسَ دعم المستودع بوضع Star.
 
 </div>
