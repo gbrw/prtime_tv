@@ -1,18 +1,19 @@
-# 🕌 PRTime TV
+# 🕌 PRTime TV – Ramadi Prayer Times
 
 <div align="center">
 
-واجهة ويب حديثة لعرض مواقيت الصلاة على الشاشات الكبيرة، مع تحديث الوقت والعد التنازلي للصلاة القادمة بشكل مباشر.
+واجهة ويب حديثة لعرض مواقيت الصلاة الخاصة بمدينة **الرمادي**، مصممة للشاشات الكبيرة مع تحديث الوقت والعد التنازلي للصلاة القادمة بشكل مباشر.
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://prtime-tv.vercel.app/)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-### 🌐 تجربة مباشرة
+### 🌐 التجربة المباشرة
 
-**https://prtime-tv.vercel.app/**
+https://prtime-tv.vercel.app/
 
 </div>
 
@@ -21,7 +22,7 @@
 ## 📸 لقطة شاشة
 
 <p align="center">
-  <img src="assets/screenshot.PNG" alt="PRTime TV" width="900">
+  <img src="assets/screenshot.PNG" alt="PRTime TV Screenshot" width="900">
 </p>
 
 ---
@@ -31,13 +32,13 @@
 - 🕒 عرض الوقت الحالي بشكل مباشر.
 - 📅 عرض التاريخ الميلادي والهجري.
 - 📆 عرض اسم اليوم.
-- 🕌 عرض جميع مواقيت الصلوات اليومية.
+- 🕌 عرض مواقيت الصلوات اليومية لمدينة **الرمادي**.
 - 🌅 عرض وقت الشروق.
-- ⏳ عد تنازلي مباشر حتى الصلاة القادمة.
+- ⏳ عد تنازلي مباشر حتى موعد الصلاة القادمة.
 - 📌 تمييز الصلاة القادمة تلقائيًا.
-- ➕➖ تعديل التاريخ الهجري (Hijri Offset).
-- 📺 واجهة محسنة للشاشات الكبيرة.
-- ⚡ تحديث البيانات بشكل لحظي.
+- ➕➖ إمكانية تعديل التاريخ الهجري (Hijri Offset).
+- 📺 واجهة محسنة للعرض على الشاشات الكبيرة.
+- ⚡ تحديث الوقت والبيانات بشكل لحظي.
 
 ---
 
@@ -51,10 +52,17 @@
 
 ---
 
-## 🚀 التشغيل
+## 🚀 التشغيل محليًا
+
+### تثبيت الاعتمادات
 
 ```bash
 npm install
+```
+
+### تشغيل المشروع
+
+```bash
 npm run dev
 ```
 
@@ -74,7 +82,7 @@ npm run preview
 
 ## 🌍 النشر
 
-يمكن نشر المشروع على أي استضافة للمواقع الثابتة مثل:
+يمكن نشر المشروع على أي خدمة تدعم المواقع الثابتة، مثل:
 
 - Vercel
 - GitHub Pages
@@ -91,6 +99,8 @@ npm run preview
 
 <div align="center">
 
-⭐ إذا أعجبك المشروع، لا تنسَ دعم المستودع بوضع Star.
+إذا أعجبك المشروع، لا تنسَ ⭐ دعم المستودع.
+
+Made with ❤️ using React + TypeScript + Vite
 
 </div>
